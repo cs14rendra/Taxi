@@ -2,6 +2,37 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>UberClientID</key>
+    <string>_2-sGt68alcZwmZegdUlphXew-HQNVaS</string>
+    <key>UberServerToken</key>
+    <string>4yH7FvfOd3gyYKksLA3d3_Q5HdKDDwp9G35we5cZ</string>
+    <key>UberDisplayName</key>
+    <string>Taxi</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>uber</string>
+        <string>uberauth</string>
+    </array>
+    <key>UberCallbackURIs</key>
+    <array>
+        <dict>
+            <key>UberCallbackURIType</key>
+            <string>General</string>
+            <key>URIString</key>
+            <string>com.weza.Taxi://oauth/consumer</string>
+        </dict>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.weza.Taxi</string>
+            </array>
+        </dict>
+    </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
