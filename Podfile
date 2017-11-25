@@ -6,7 +6,7 @@ target 'Taxi' do
   use_frameworks!
  pod 'UberRides', '~> 0.7'
   pod 'OAuthSwift'
-
+pod 'SwiftyTimer'
   # Pods for Taxi
 
   target 'TaxiTests' do

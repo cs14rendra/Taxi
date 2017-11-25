@@ -12,15 +12,28 @@ import CoreLocation
 
 let op = "ee4cc08e-b162-4fdb-a43e-f8276ba01e34"
 let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
-let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
+let dropoffLocation = CLLocation(latitude: 12.9279232, longitude: 77.62710779999998)
 
 class UberVC: UIViewController {
+    
+    
+    
+    @IBAction func cancel(_ sender: Any) {
+       // self.cancel()
+       
+    }
+    
+    @IBAction func status(_ sender: Any) {
+        self.getStatus()
+    }
+    
     
     @IBOutlet var tableView: UITableView!
     var accessToken : String?
     var client : RidesClient?
     var rideParameters : RideParameters?
     var requestID : String?
+    var paymentMethod  = [PaymentMethod]()
     
     var parameters = [RideParameters](){
         didSet{
@@ -35,18 +48,41 @@ class UberVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
         let nim = UINib(nibName: "UberC", bundle: nil)
         self.tableView.register(nim, forCellReuseIdentifier: "Cell")
-        let accessTokenID = UserDefaults.standard.string(forKey: "T")
-        print(accessTokenID)
-        client = RidesClient(accessTokenIdentifier: "my")
-        self.fetchAllProductParameters()
+        
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
         self.tableView.allowsSelection = false
+        
+       
+        client = RidesClient(accessTokenIdentifier: "my")
+        
         accessToken = TokenManager.fetchToken(identifier: "my")?.tokenString
+        
+        self.fetchAllProductParameters()
+        self.getPaymentMethod()
     }
     
+    func getPaymentMethod(){
+        client?.fetchPaymentMethods(completion: { (payments, recentPayment, res) in
+            for payment in payments{
+                self.paymentMethod.append(payment)
+            }
+        })
+    }
+    
+    func getcashpayMethodID() -> String? {
+        var cash : String?
+        for pay in self.paymentMethod{
+            //print("\(pay.type):\(pay.paymentDescription):\(pay.methodID)")
+            if pay.type == "cash"{
+                cash = pay.methodID
+            }
+        }
+        return cash
+    }
     
     func fetchAllProductParameters (){
         client?.fetchProducts(pickupLocation: pickupLocation, completion: { (products, res) in
@@ -102,12 +138,17 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
     
     @objc func dosome(sender : UIButton){
         
-        let parameter = self.parameters[sender.tag]
+                let parameter = self.parameters[sender.tag]
         let productID = self.parameters[sender.tag].productID
         self.estimatedParameter(fromParameter: parameter) { (fairID) in
             print(fairID)
             self.requestforfinalRide(forfairID: fairID!, and: productID!, completion: {
-                
+                if let id = self.requestID{
+                    self.client?.fetchRideDetails(requestID: id, completion: { (ride, res) in
+                        print(ride?.status)
+                    })
+                }
+
             })
         }
         
@@ -136,7 +177,7 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
     
     func requestforfinalRide(forfairID id : String,and productID : String,completion:@escaping ()->()){
         let session = self.getSession()
-        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests")
+        let url = URL(string: "https://api.uber.com/v1.2/requests")
         let request = NSMutableURLRequest(url: url!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -145,13 +186,15 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
         let startlong = "\(pickupLocation.coordinate.longitude)"
         let endlat = "\(dropoffLocation.coordinate.latitude)"
         let endlog = "\(dropoffLocation.coordinate.longitude)"
+        let paymentMethodID = self.getcashpayMethodID()
         
         let body = ["product_id": productID,
                     "start_latitude":startlat,
                     "start_longitude": startlong,
                     "end_latitude":endlat,
                     "end_longitude": endlog,
-                    "fare_id":id
+                    "fare_id":id,
+            "payment_method_id" : paymentMethodID!
         ]
         
         try! request.httpBody = JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions())
@@ -187,6 +230,31 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
         let session = URLSession(configuration: sessionConfig)
         return session
         
+    }
+    
+    func cancel(){
+        self.client?.cancelCurrentRide(completion: { (res) in
+            print(res.response)
+            print(res.statusCode)
+            print(res.description)
+        })
+    }
+    
+    func getStatus(){
+        let session = self.getSession()
+        let url = URL(string: "https://api.uber.com/v1.2/requests/current")
+        let request = NSMutableURLRequest(url: url!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("en_US", forHTTPHeaderField: "Accept-Language")
+        session.dataTask(with: request as URLRequest) { (data, response, error) in
+            guard error == nil else {
+                print(error?.localizedDescription)
+                return
+            }
+            let j = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+            print(j)
+        }.resume()
     }
 
 }
