@@ -10,6 +10,8 @@
 		3468F58031E37271ECCCD6D7 /* Pods_TaxiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E640308CAEA54DAE1DA42 /* Pods_TaxiUITests.framework */; };
 		5E83342003339B96E0A41150 /* Pods_Taxi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 858316E845E7480939BD0239 /* Pods_Taxi.framework */; };
 		6FE9D4527D1D4B0415DD94C5 /* Pods_TaxiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C81A34699710138B338B4FB /* Pods_TaxiTests.framework */; };
+		ED38B1721FC8182600718CE1 /* UberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38B1701FC8182500718CE1 /* UberVC.swift */; };
+		ED38B1731FC8182600718CE1 /* UberVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED38B1711FC8182500718CE1 /* UberVC.xib */; };
 		EDA201C31FC723770019E78B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA201C21FC723770019E78B /* AppDelegate.swift */; };
 		EDA201C51FC723770019E78B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA201C41FC723770019E78B /* ViewController.swift */; };
 		EDA201C81FC723770019E78B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDA201C61FC723770019E78B /* Main.storyboard */; };
@@ -46,6 +48,8 @@
 		AB443F734273B3418C48077E /* Pods-TaxiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TaxiTests/Pods-TaxiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BC7B8572E74D8323970F0D7C /* Pods-TaxiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxiUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TaxiUITests/Pods-TaxiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8E2D82D7013365337DFEEDC /* Pods-TaxiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TaxiTests/Pods-TaxiTests.release.xcconfig"; sourceTree = "<group>"; };
+		ED38B1701FC8182500718CE1 /* UberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberVC.swift; sourceTree = "<group>"; };
+		ED38B1711FC8182500718CE1 /* UberVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UberVC.xib; sourceTree = "<group>"; };
 		EDA201BF1FC723770019E78B /* Taxi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taxi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA201C21FC723770019E78B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDA201C41FC723770019E78B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -137,12 +141,14 @@
 		EDA201C11FC723770019E78B /* Taxi */ = {
 			isa = PBXGroup;
 			children = (
+				EDA201CE1FC723770019E78B /* Info.plist */,
 				EDA201C21FC723770019E78B /* AppDelegate.swift */,
 				EDA201C41FC723770019E78B /* ViewController.swift */,
-				EDA201C61FC723770019E78B /* Main.storyboard */,
+				ED38B1701FC8182500718CE1 /* UberVC.swift */,
 				EDA201C91FC723770019E78B /* Assets.xcassets */,
 				EDA201CB1FC723770019E78B /* LaunchScreen.storyboard */,
-				EDA201CE1FC723770019E78B /* Info.plist */,
+				EDA201C61FC723770019E78B /* Main.storyboard */,
+				ED38B1711FC8182500718CE1 /* UberVC.xib */,
 			);
 			path = Taxi;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 			files = (
 				EDA201CD1FC723770019E78B /* LaunchScreen.storyboard in Resources */,
 				EDA201CA1FC723770019E78B /* Assets.xcassets in Resources */,
+				ED38B1731FC8182600718CE1 /* UberVC.xib in Resources */,
 				EDA201C81FC723770019E78B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,10 +366,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Taxi/Pods-Taxi-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/UberRides/UberRides.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAuthSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UberRides.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED38B1721FC8182600718CE1 /* UberVC.swift in Sources */,
 				EDA201C51FC723770019E78B /* ViewController.swift in Sources */,
 				EDA201C31FC723770019E78B /* AppDelegate.swift in Sources */,
 			);

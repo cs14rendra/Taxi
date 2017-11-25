@@ -19,7 +19,7 @@
             <key>UberCallbackURIType</key>
             <string>General</string>
             <key>URIString</key>
-            <string>com.weza.Taxi://oauth/consumer</string>
+            <string>com.weza.Taxi</string>
         </dict>
     </array>
     <key>CFBundleURLTypes</key>

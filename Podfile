@@ -5,6 +5,7 @@ target 'Taxi' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
  pod 'UberRides', '~> 0.7'
+  pod 'OAuthSwift'
 
   # Pods for Taxi
 

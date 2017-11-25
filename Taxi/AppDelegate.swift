@@ -8,6 +8,7 @@
 
 import UIKit
 import UberRides
+import OAuthSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,17 +43,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    @available(iOS 9, *)
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let handledUberURL = RidesAppDelegate.shared.application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation] as Any)
-        
-        return handledUberURL
-    }
+//    @available(iOS 9, *)
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+//        let handledUberURL = RidesAppDelegate.shared.application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation] as Any)
+//
+//        return handledUberURL
+//    }
+//
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        let handledUberURL = RidesAppDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+//
+//        return handledUberURL
+//    }
     
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        let handledUberURL = RidesAppDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
-        
-        return handledUberURL
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        print(url)
+        OAuthSwift.handle(url: url)
+        return true
     }
 
 }

@@ -44,6 +44,7 @@ import Foundation
      */
     @objc public override init(scopes: [RidesScope]) {
         deeplink = AuthenticationDeeplink(scopes: scopes)
+        print(deeplink.deeplinkURL)
         super.init(scopes: scopes)
         callbackURIType = .native
     }
