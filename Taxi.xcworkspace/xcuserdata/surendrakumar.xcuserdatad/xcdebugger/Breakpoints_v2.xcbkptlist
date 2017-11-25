@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/ViewController.swift"
-            timestampString = "533281387.064282"
+            timestampString = "533293599.22014"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/ViewController.swift"
-            timestampString = "533281387.072087"
+            timestampString = "533293599.220283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "loginButton(_:didCompleteLoginWithToken:error:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/AppDelegate.swift"
-            timestampString = "533255196.260973"
+            timestampString = "533283433.139113"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "61"
@@ -122,7 +122,7 @@
                   moduleName = "UberRides"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/surendrakumar/Desktop/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
-                  timestampString = "533281390.551576"
+                  timestampString = "533293599.896363"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
@@ -137,7 +137,7 @@
                   moduleName = "UberRides"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/surendrakumar/Desktop/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
-                  timestampString = "533281390.554776"
+                  timestampString = "533293599.900018"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "55"
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/ViewController.swift"
-            timestampString = "533281387.07283"
+            timestampString = "533293599.22043"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "65"
@@ -166,31 +166,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/ViewController.swift"
-            timestampString = "533281387.073436"
+            timestampString = "533293599.220509"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "uber()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (OAuthSwift.OAuthSwiftCredential, Swift.Optional&lt;OAuthSwift.OAuthSwiftResponse&gt;, Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; () in Taxi.ViewController.uber() -&gt; ()"
+                  moduleName = "Taxi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/surendrakumar/Desktop/Taxi/Taxi/ViewController.swift"
+                  timestampString = "533282602.324072"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "640">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (OAuthSwift.OAuthSwiftError) -&gt; () in Taxi.ViewController.uber() -&gt; ()"
+                  moduleName = "Taxi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/surendrakumar/Desktop/Taxi/Taxi/ViewController.swift"
+                  timestampString = "533282602.327589"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/ViewController.swift"
-            timestampString = "533281387.074025"
+            timestampString = "533293599.220581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "uber()"
             landmarkType = "7">
          </BreakpointContent>

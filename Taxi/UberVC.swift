@@ -15,22 +15,25 @@ class UberVC: UIViewController {
     
     var client : RidesClient?
     var rideParameters : RideParameters?
+    var rideprmarray = [RideParameters]()
     
     override func loadView() {
         Bundle.main.loadNibNamed("UberVC", owner: self, options: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.addRideRequestButton()
+        
         let accessTokenID = UserDefaults.standard.string(forKey: "T")
-        client = RidesClient(accessTokenIdentifier: accessTokenID!)
+        print(accessTokenID)
+        client = RidesClient(accessTokenIdentifier: "my")
+        self.BookaRide()
     }
     
-    func addRideRequestButton(){
+    func addRideRequestButton(param : RideParameters, po: Int ){
         let t = UserDefaults.standard.string(forKey: "T")
         let builder = RideParametersBuilder()
         let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
-        let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.99741899999997)
+        let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
         builder.pickupLocation = pickupLocation
         builder.dropoffLocation = dropoffLocation
         builder.dropoffNickname = "Somewhere"
@@ -40,8 +43,8 @@ class UberVC: UIViewController {
         let client = RidesClient()
         print(client.hasServerToken)
         let behavior = RideRequestViewRequestingBehavior(presentingViewController: self)
-        let btn = RideRequestButton(client: client, rideParameters: rideParameters!, requestingBehavior: behavior)
-        btn.frame = CGRect(x: 1, y: 70, width: 370, height: 100)
+        let btn = RideRequestButton(client: client, rideParameters: param, requestingBehavior: behavior)
+        btn.frame = CGRect(x: 1, y: po, width: 300, height: 50)
         btn.loadRideInformation()
         btn.removeTarget(nil, action: nil, for: .allEvents)
         btn.addTarget(self, action: #selector(dosome), for: .touchUpInside)
@@ -53,10 +56,57 @@ class UberVC: UIViewController {
     }
     
     func BookaRide(){
-        client?.requestRide(parameters: rideParameters!, completion: { (ride, res) in
-            print(ride?.driver?.name)
-            print(res.error?.code)
+        let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
+        
+        client?.fetchProducts(pickupLocation: pickupLocation, completion: { (products, res) in
+            for product in products{
+                
+                let builder = RideParametersBuilder()
+                let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
+                let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
+                builder.pickupLocation = pickupLocation
+                builder.dropoffLocation = dropoffLocation
+                builder.dropoffNickname = "Somewhere"
+                builder.dropoffAddress = "123 Fake St."
+                builder.productID = product.productID
+                let p  = builder.build()
+                self.rideprmarray.append(p)
+                var po = 0
+                for i in self.rideprmarray{
+//
+//                    self.client?.requestRide(parameters: i, completion: { (ride, res) in
+//
+//                        print(ride?.driver?.name)
+//                        print(res.error?.code)
+//
+//                    })
+                    self.addRideRequestButton(param: i, po: po)
+                    po = po + 50
+                }
+                
+            }
         })
+        
+        
+//        client?.fetchTripHistory(completion: { (history, res) in
+//            for item in (history?.history)! {
+//                print(item.startCity.name)
+//            }
+//            print(res.error)
+//        })
+//
+//        client?.fetchPaymentMethods(completion: { (payarray, pay, res) in
+//            for item in payarray{
+//                print("\(item.type) :\(item.paymentDescription)")
+//
+//            }
+//
+//            print(pay?.type)
+//        })
+        
+//        client?.fetchRideReceipt(requestID: "873712bxey", completion: { (ride, rs) in
+//            print(ride?.duration)
+//        })
     }
 }
 

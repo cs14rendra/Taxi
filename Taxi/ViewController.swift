@@ -17,8 +17,6 @@ let clientID = "_2-sGt68alcZwmZegdUlphXew-HQNVaS"
 let sereverToken = "4yH7FvfOd3gyYKksLA3d3_Q5HdKDDwp9G35we5cZ"
 
 class ViewController: UIViewController {
-
-    let url = "uberauth://connect?third_party_app_name=Taxi&callback_uri_string=com.weza.Taxi://oauth/consumer&client_id=_2-sGt68alcZwmZegdUlphXew-HQNVaS&scope=profile"
     var token : String?
     var  oath : OAuth2Swift?
     override func viewDidLoad() {
@@ -29,8 +27,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if let _ = UserDefaults.standard.string(forKey: "T"){
-            //let vc = UberVC()
-            //self.present(vc, animated: true, completion: nil)
+            let vc = UberVC()
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -61,10 +59,17 @@ class ViewController: UIViewController {
             // Fallback on earlier versions
         }
         
-        oath!.authorize(withCallbackURL: "com.weza.Taxi://oauth/consumer", scope: "request", state: "UBER", success: { (credential, response, parameters) in
+        oath!.authorize(withCallbackURL: "com.weza.Taxi://oauth/consumer", scope: "request+profile+all_trips+request_receipt+ride_widgets+places+history_lite+history", state: "UBER", success: { (credential, response, parameters) in
             print(credential.oauthToken)
-            print(credential.oauthTokenSecret)
+            self.token = credential.oauthToken
             
+            let tokenS = AccessToken(tokenString: credential.oauthToken)
+            if TokenManager.save(accessToken: tokenS, tokenIdentifier: "my"){
+                print("saved")
+            }else{
+                print("not saved")
+            }
+            UserDefaults.standard.set(self.token, forKey: "T")
             
         }) {  (error) in
             print(error._domain)
