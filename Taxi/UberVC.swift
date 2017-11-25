@@ -12,21 +12,32 @@ import CoreLocation
 
 class UberVC: UIViewController {
     
+    @IBOutlet var tableView: UITableView!
     
     var client : RidesClient?
     var rideParameters : RideParameters?
-    var rideprmarray = [RideParameters]()
+    var rideprmarray = [RideParameters](){
+        didSet{
+            DispatchQueue.main.async {
+                 self.tableView.reloadData()
+            }
+        }
+    }
     
     override func loadView() {
         Bundle.main.loadNibNamed("UberVC", owner: self, options: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        let nim = UINib(nibName: "UberC", bundle: nil)
+        self.tableView.register(nim, forCellReuseIdentifier: "Cell")
         let accessTokenID = UserDefaults.standard.string(forKey: "T")
         print(accessTokenID)
         client = RidesClient(accessTokenIdentifier: "my")
-        self.BookaRide()
+        self.fetchAllProduct()
+        
     }
     
     func addRideRequestButton(param : RideParameters, po: Int ){
@@ -55,37 +66,30 @@ class UberVC: UIViewController {
         self.BookaRide()
     }
     
-    func BookaRide(){
+    func fetchAllProduct (){
         let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
         
         client?.fetchProducts(pickupLocation: pickupLocation, completion: { (products, res) in
+            let builder = RideParametersBuilder()
+            let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
+            let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
+            builder.pickupLocation = pickupLocation
+            builder.dropoffLocation = dropoffLocation
+            builder.dropoffNickname = "Somewhere"
+            builder.dropoffAddress = "123 Fake St."
+        
+            var ride = [RideParameters]()
             for product in products{
-                
-                let builder = RideParametersBuilder()
-                let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
-                let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
-                builder.pickupLocation = pickupLocation
-                builder.dropoffLocation = dropoffLocation
-                builder.dropoffNickname = "Somewhere"
-                builder.dropoffAddress = "123 Fake St."
                 builder.productID = product.productID
-                let p  = builder.build()
-                self.rideprmarray.append(p)
-                var po = 0
-                for i in self.rideprmarray{
-//
-//                    self.client?.requestRide(parameters: i, completion: { (ride, res) in
-//
-//                        print(ride?.driver?.name)
-//                        print(res.error?.code)
-//
-//                    })
-                    self.addRideRequestButton(param: i, po: po)
-                    po = po + 50
-                }
-                
+                let parameter  = builder.build()
+                ride.append(parameter)
             }
+            self.rideprmarray = ride
         })
+    }
+    
+    func BookaRide(){
+        
         
         
 //        client?.fetchTripHistory(completion: { (history, res) in
@@ -120,6 +124,77 @@ extension UberVC : RideRequestButtonDelegate{
     
     func rideRequestButton(_ button: RideRequestButton, didReceiveError error: RidesError) {
         print("button error")
+    }
+}
+
+extension UberVC : UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return rideprmarray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UberC
+        let behavior = RideRequestViewRequestingBehavior(presentingViewController: self)
+        let param = self.rideprmarray[indexPath.row]
+        let btn = RideRequestButton(client: self.client!, rideParameters: param, requestingBehavior: behavior)
+        btn.frame = CGRect(x: 10, y: 20, width: cell.contentView.bounds.size.width-20, height: 110)
+        btn.loadRideInformation()
+        btn.removeTarget(nil, action: nil, for: .allEvents)
+        //btn.addTarget(self, action: #selector(dosome), for: .touchUpInside)
+        btn.delegate = self
+        cell.contentView.addSubview(btn)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let parameterts = self.rideprmarray[indexPath.row]
+        self.requestRide(p: parameterts)
+    }
+    
+    func requestRide(p : RideParameters){
+        let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
+        let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
+        var method = [PaymentMethod]()
+        
+        client?.fetchPaymentMethods(completion: { (payarr, pay, res) in
+            method = payarr
+            for meth in method {
+               print(meth.type)
+            }
+            var surgeID : String?
+            var productID : String?
+            
+            self.client?.fetchPriceEstimates(pickupLocation: pickupLocation, dropoffLocation: dropoffLocation, completion: { (priceestimate, res) in
+                for price in priceestimate{
+                    print(price.surgeConfirmationID)
+                    print(price.productID)
+                    surgeID = price.surgeConfirmationID
+                    productID = price.productID
+                }
+                let builder = RideParametersBuilder()
+                builder.pickupLocation = pickupLocation
+                builder.dropoffLocation = dropoffLocation
+                builder.dropoffNickname = "Somewhere"
+                builder.dropoffAddress = "123 Fake St."
+                builder.paymentMethod = method[1].methodID
+                builder.productID = productID!
+                builder.surgeConfirmationID = surgeID
+                self.client?.requestRide(parameters: builder.build(), completion: { (ride
+                , res) in
+                    print(ride?.driver?.name)
+                })
+                
+            })
+        })
+        
+       
+    
+        
+        
     }
 }
 

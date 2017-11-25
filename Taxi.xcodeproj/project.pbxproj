@@ -19,6 +19,8 @@
 		EDA201CD1FC723770019E78B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDA201CB1FC723770019E78B /* LaunchScreen.storyboard */; };
 		EDA201D81FC723770019E78B /* TaxiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA201D71FC723770019E78B /* TaxiTests.swift */; };
 		EDA201E31FC723770019E78B /* TaxiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA201E21FC723770019E78B /* TaxiUITests.swift */; };
+		EDAB42C11FC96C5200A5A8DB /* UberC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB42BF1FC96C5200A5A8DB /* UberC.swift */; };
+		EDAB42C21FC96C5200A5A8DB /* UberC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDAB42C01FC96C5200A5A8DB /* UberC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		EDA201DE1FC723770019E78B /* TaxiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaxiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDA201E21FC723770019E78B /* TaxiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiUITests.swift; sourceTree = "<group>"; };
 		EDA201E41FC723770019E78B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDAB42BF1FC96C5200A5A8DB /* UberC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberC.swift; sourceTree = "<group>"; };
+		EDAB42C01FC96C5200A5A8DB /* UberC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UberC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +153,8 @@
 				EDA201CB1FC723770019E78B /* LaunchScreen.storyboard */,
 				EDA201C61FC723770019E78B /* Main.storyboard */,
 				ED38B1711FC8182500718CE1 /* UberVC.xib */,
+				EDAB42BF1FC96C5200A5A8DB /* UberC.swift */,
+				EDAB42C01FC96C5200A5A8DB /* UberC.xib */,
 			);
 			path = Taxi;
 			sourceTree = "<group>";
@@ -289,6 +295,7 @@
 			files = (
 				EDA201CD1FC723770019E78B /* LaunchScreen.storyboard in Resources */,
 				EDA201CA1FC723770019E78B /* Assets.xcassets in Resources */,
+				EDAB42C21FC96C5200A5A8DB /* UberC.xib in Resources */,
 				ED38B1731FC8182600718CE1 /* UberVC.xib in Resources */,
 				EDA201C81FC723770019E78B /* Main.storyboard in Resources */,
 			);
@@ -470,6 +477,7 @@
 				ED38B1721FC8182600718CE1 /* UberVC.swift in Sources */,
 				EDA201C51FC723770019E78B /* ViewController.swift in Sources */,
 				EDA201C31FC723770019E78B /* AppDelegate.swift in Sources */,
+				EDAB42C11FC96C5200A5A8DB /* UberC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
