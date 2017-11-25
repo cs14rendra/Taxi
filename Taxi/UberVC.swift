@@ -13,9 +13,10 @@ import CoreLocation
 class UberVC: UIViewController {
     
     @IBOutlet var tableView: UITableView!
-    
+    var fairID : String?
     var client : RidesClient?
     var rideParameters : RideParameters?
+    var products = [Product]()
     var rideprmarray = [RideParameters](){
         didSet{
             DispatchQueue.main.async {
@@ -158,42 +159,61 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
     func requestRide(p : RideParameters){
         let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.69741899999997)
         let dropoffLocation = CLLocation(latitude: 12.9591722, longitude: 77.79741899999997)
-        var method = [PaymentMethod]()
+        let queue = OperationQueue()
         
-        client?.fetchPaymentMethods(completion: { (payarr, pay, res) in
-            method = payarr
-            for meth in method {
-               print(meth.type)
-            }
-            var surgeID : String?
-            var productID : String?
-            
-            self.client?.fetchPriceEstimates(pickupLocation: pickupLocation, dropoffLocation: dropoffLocation, completion: { (priceestimate, res) in
-                for price in priceestimate{
-                    print(price.surgeConfirmationID)
-                    print(price.productID)
-                    surgeID = price.surgeConfirmationID
-                    productID = price.productID
+        let block1 = BlockOperation {
+            self.client?.fetchProducts(pickupLocation: pickupLocation, completion: { (products, res) in
+                for product in products{
+                    self.products.append(product)
                 }
-                let builder = RideParametersBuilder()
-                builder.pickupLocation = pickupLocation
-                builder.dropoffLocation = dropoffLocation
-                builder.dropoffNickname = "Somewhere"
-                builder.dropoffAddress = "123 Fake St."
-                builder.paymentMethod = method[1].methodID
-                builder.productID = productID!
-                builder.surgeConfirmationID = surgeID
-                self.client?.requestRide(parameters: builder.build(), completion: { (ride
-                , res) in
-                    print(ride?.driver?.name)
-                })
                 
             })
-        })
-        
+        }
        
-    
+        let block2 = BlockOperation {
+            let builder = RideParametersBuilder()
+            builder.pickupLocation = pickupLocation
+            builder.dropoffLocation = dropoffLocation
+            builder.productID = self.products.first?.productID
+            self.client?.fetchRideRequestEstimate(parameters: builder.build(), completion: { (estimate, res) in
+                print(estimate?.fare?.fareID)
+                print(self.products.first?.name)
+                self.fairID = estimate?.fare?.fareID
+                
+            })
+        }
+        let block3 = BlockOperation {
+            let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests")
+            var request = NSMutableURLRequest(url: url!)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let id : String = (self.products.first?.productID)!
+            let startlat = pickupLocation.coordinate.latitude
+            let atartlong = pickupLocation.coordinate.longitude
+            let endlat = dropoffLocation.coordinate.latitude
+            let endlog = dropoffLocation.coordinate.longitude
+            let fairID : String = self.fairID!
+            print(id)
+            print(fairID)
+
+            let body = ["product_id": "821415d8-3bd5-4e27-9604-194e4359a449",
+                "start_latitude":"37.775232",
+                "start_longitude": "-122.4197513",
+                "end_latitude":"37.7899886",
+                "end_longitude": "-122.4021253",
+                "fare_id":fairID
+            ]
+            try! request.httpBody = JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions())
+            
+            
+            URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
+                
+                }.resume()
+        }
         
+        block2.addDependency(block1)
+        queue.addOperation(block1)
+        queue.addOperation(block2)
         
     }
 }
