@@ -19,7 +19,7 @@ class UberVC: UIViewController {
     
     
     @IBAction func cancel(_ sender: Any) {
-       // self.cancel()
+       self.changeStatus()
        
     }
     
@@ -177,7 +177,7 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
     
     func requestforfinalRide(forfairID id : String,and productID : String,completion:@escaping ()->()){
         let session = self.getSession()
-        let url = URL(string: "https://api.uber.com/v1.2/requests")
+        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests")
         let request = NSMutableURLRequest(url: url!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -232,17 +232,30 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
         
     }
     
-    func cancel(){
-        self.client?.cancelCurrentRide(completion: { (res) in
-            print(res.response)
-            print(res.statusCode)
-            print(res.description)
-        })
+    func changeStatus(){
+        let session = self.getSession()
+        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests/c3e34783-2304-4566-9f83-b417091fc7d3")
+        let request = NSMutableURLRequest(url: url!)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("en_US", forHTTPHeaderField: "Accept-Language")
+        
+        let body = ["status":"accepted"]
+        
+        try! request.httpBody = JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions())
+        
+        
+        session.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
+            
+            let j = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+            print(j)
+            }.resume()
+        
     }
     
     func getStatus(){
         let session = self.getSession()
-        let url = URL(string: "https://api.uber.com/v1.2/requests/current")
+        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests/current")
         let request = NSMutableURLRequest(url: url!)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

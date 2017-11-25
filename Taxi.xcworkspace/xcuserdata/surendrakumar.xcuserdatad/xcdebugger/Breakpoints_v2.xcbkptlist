@@ -106,7 +106,7 @@
                   moduleName = "UberRides"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/surendrakumar/Desktop/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
-                  timestampString = "533333394.285591"
+                  timestampString = "533334742.594219"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
@@ -121,7 +121,7 @@
                   moduleName = "UberRides"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/surendrakumar/Desktop/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
-                  timestampString = "533333394.289785"
+                  timestampString = "533334742.598004"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "55"
@@ -186,12 +186,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Taxi/UberVC.swift"
-            timestampString = "533333392.371554"
+            timestampString = "533334741.015224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
             endingLineNumber = "205"
             landmarkName = "requestforfinalRide(forfairID:and:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Taxi/UberVC.swift"
+            timestampString = "533334741.016419"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
+            landmarkName = "getStatus()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
