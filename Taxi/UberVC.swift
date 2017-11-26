@@ -15,20 +15,10 @@ let pickupLocation = CLLocation(latitude: 12.9591722, longitude: 77.697418999999
 let dropoffLocation = CLLocation(latitude: 12.9279232, longitude: 77.62710779999998)
 
 class UberVC: UIViewController {
-    
-    
-    
-    @IBAction func cancel(_ sender: Any) {
-       self.changeStatus()
-       
-    }
-    
-    @IBAction func status(_ sender: Any) {
-        self.getStatus()
-    }
-    
-    
+
     @IBOutlet var tableView: UITableView!
+    
+    var managerUber : Uber?
     var accessToken : String?
     var client : RidesClient?
     var rideParameters : RideParameters?
@@ -46,23 +36,49 @@ class UberVC: UIViewController {
     override func loadView() {
         Bundle.main.loadNibNamed("UberVC", owner: self, options: nil)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let nim = UINib(nibName: "UberC", bundle: nil)
         self.tableView.register(nim, forCellReuseIdentifier: "Cell")
-        
-        
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.allowsSelection = false
         
        
         client = RidesClient(accessTokenIdentifier: "my")
-        
         accessToken = TokenManager.fetchToken(identifier: "my")?.tokenString
+        if let _ = accessToken {
+            managerUber = Uber(accessToken: accessToken!)
+        }
         
         self.fetchAllProductParameters()
         self.getPaymentMethod()
+    }
+    
+    @IBAction func cancel(_ sender: Any) {
+        managerUber?.geCurrentStatus(completion: { (requestID, status, error) in
+            guard error == nil else {
+                return
+            }
+            if let id = requestID {
+                self.requestID = id
+            }
+            
+            if let sts = status {
+                self.alert(title: "Current Ride", message: "\(sts)")
+            }
+        })
+    }
+    
+    @IBAction func status(_ sender: Any) {
+        guard let rideID = self.requestID else {
+            self.alert(title: "Error!", message: "request ID is nil")
+            return
+        }
+        managerUber?.changeStatus(ofRiding: rideID, to: "accepted", completion: { (statusCode) in
+            self.alert(title: "Status", message: "\(statusCode)")
+        })
     }
     
     func getPaymentMethod(){
@@ -76,7 +92,6 @@ class UberVC: UIViewController {
     func getcashpayMethodID() -> String? {
         var cash : String?
         for pay in self.paymentMethod{
-            //print("\(pay.type):\(pay.paymentDescription):\(pay.methodID)")
             if pay.type == "cash"{
                 cash = pay.methodID
             }
@@ -100,7 +115,6 @@ class UberVC: UIViewController {
             self.parameters = ride
         })
     }
-
 }
 
 extension UberVC : RideRequestButtonDelegate{
@@ -120,50 +134,21 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! UberC
-        
-        let behavior = RideRequestViewRequestingBehavior(presentingViewController: self)
-        let param = self.parameters[indexPath.row]
-        let btn = RideRequestButton(client: self.client!, rideParameters: param, requestingBehavior: behavior)
-        
-        btn.frame = CGRect(x: 10, y: 20, width: cell.contentView.bounds.size.width-20, height: 110)
-        btn.tag = indexPath.row
-        btn.loadRideInformation()
-        btn.removeTarget(nil, action: nil, for: .allEvents)
-        btn.addTarget(self, action: #selector(UberVC.dosome(sender:)), for: .touchUpInside)
-        btn.delegate = self
-        cell.contentView.addSubview(btn)
-        
-        return cell
-    }
-    
-    @objc func dosome(sender : UIButton){
-        
-                let parameter = self.parameters[sender.tag]
-        let productID = self.parameters[sender.tag].productID
-        self.estimatedParameter(fromParameter: parameter) { (fairID) in
-            print(fairID)
-            self.requestforfinalRide(forfairID: fairID!, and: productID!, completion: {
-                if let id = self.requestID{
-                    self.client?.fetchRideDetails(requestID: id, completion: { (ride, res) in
-                        print(ride?.status)
-                    })
-                }
-
-            })
+        let view = cell.viewWithTag(indexPath.row)
+        if view == nil {
+            let behavior = RideRequestViewRequestingBehavior(presentingViewController: self)
+            let param = self.parameters[indexPath.row]
+            let btn = RideRequestButton(client: self.client!, rideParameters: param, requestingBehavior: behavior)
+            
+            btn.frame = CGRect(x: 10, y: 20, width: cell.contentView.bounds.size.width-20, height: 110)
+            btn.tag = indexPath.row
+            btn.loadRideInformation()
+            btn.removeTarget(nil, action: nil, for: .allEvents)
+            btn.addTarget(self, action: #selector(UberVC.dosome(sender:)), for: .touchUpInside)
+            btn.delegate = self
+            cell.contentView.addSubview(btn)
         }
-        
-    }
-    
-    func estimatedParameter(fromParameter parameter : RideParameters, completion: @escaping (String?)->()){
-        
-        let builder = RideParametersBuilder()
-        builder.pickupLocation = parameter.pickupLocation
-        builder.dropoffLocation = parameter.dropoffLocation
-        builder.productID = parameter.productID
-        
-        self.client?.fetchRideRequestEstimate(parameters: builder.build(), completion: { (estimate, res) in
-            completion(estimate?.fare?.fareID)
-        })
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -173,102 +158,42 @@ extension UberVC : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     }
+}
 
+extension UberVC  {
     
-    func requestforfinalRide(forfairID id : String,and productID : String,completion:@escaping ()->()){
-        let session = self.getSession()
-        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests")
-        let request = NSMutableURLRequest(url: url!)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //let id : String = (self.products.first?.productID)!
-        let startlat = "\(pickupLocation.coordinate.latitude)"
-        let startlong = "\(pickupLocation.coordinate.longitude)"
-        let endlat = "\(dropoffLocation.coordinate.latitude)"
-        let endlog = "\(dropoffLocation.coordinate.longitude)"
-        let paymentMethodID = self.getcashpayMethodID()
-        
-        let body = ["product_id": productID,
-                    "start_latitude":startlat,
-                    "start_longitude": startlong,
-                    "end_latitude":endlat,
-                    "end_longitude": endlog,
-                    "fare_id":id,
-            "payment_method_id" : paymentMethodID!
-        ]
-        
-        try! request.httpBody = JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions())
-        
-        
-        session.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
-            
-            let j = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
-            if let value = j as? [String: AnyObject] {
-                if let a = value["request_id"] as? String{
-                    self.requestID = a
+    @objc func dosome(sender : UIButton){
+        let parameter = self.parameters[sender.tag]
+        let productID = self.parameters[sender.tag].productID
+        self.estimatedParameter(fromParameter: parameter) { fairID in
+            let payID = self.getcashpayMethodID()
+            // TODO : Remore force unwrapping
+            self.managerUber?.requestforfinalRide(forfairID: fairID!, and: productID!, paymentMethodID: payID!, completion: { requestID, error, errorTitle in
+                guard error == nil else {
+                    self.alert(title: "Error!", message: (error?.localizedDescription)!)
+                    return
                 }
-            }
-            
-            if let value = j as? [String: AnyObject]{
-                if let er = value["errors"] {
-                    print(er)
-                    if let code = er["code"] as? String{
-                        print(code)
-                    }
+                if  let title = errorTitle {
+                    self.alert(title: "Error!", message: title)
+                    return
                 }
-            }
-            print(j)
-            completion()
-            }.resume()
-    }
-    
-    
-    func getSession() -> URLSession{
-        let authValue : String = "Bearer \(accessToken!)"
-        let  sessionConfig = URLSessionConfiguration.default
-        sessionConfig.httpAdditionalHeaders = ["Authorization": authValue]
-        let session = URLSession(configuration: sessionConfig)
-        return session
-        
-    }
-    
-    func changeStatus(){
-        let session = self.getSession()
-        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests/c3e34783-2304-4566-9f83-b417091fc7d3")
-        let request = NSMutableURLRequest(url: url!)
-        request.httpMethod = "PUT"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("en_US", forHTTPHeaderField: "Accept-Language")
-        
-        let body = ["status":"accepted"]
-        
-        try! request.httpBody = JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions())
-        
-        
-        session.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
             
-            let j = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
-            print(j)
-            }.resume()
-        
+                self.requestID = requestID!
+                self.alert(title: "Success!", message: "Booked at \(self.requestID!)")
+            })
+        }
     }
     
-    func getStatus(){
-        let session = self.getSession()
-        let url = URL(string: "https://sandbox-api.uber.com/v1.2/requests/current")
-        let request = NSMutableURLRequest(url: url!)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("en_US", forHTTPHeaderField: "Accept-Language")
-        session.dataTask(with: request as URLRequest) { (data, response, error) in
-            guard error == nil else {
-                print(error?.localizedDescription)
-                return
-            }
-            let j = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
-            print(j)
-        }.resume()
+    
+    func estimatedParameter(fromParameter parameter : RideParameters, completion: @escaping (String?)->()){
+        let builder = RideParametersBuilder()
+        builder.pickupLocation = parameter.pickupLocation
+        builder.dropoffLocation = parameter.dropoffLocation
+        builder.productID = parameter.productID
+        
+        self.client?.fetchRideRequestEstimate(parameters: builder.build(), completion: { (estimate, res) in
+            completion(estimate?.fare?.fareID)
+        })
     }
-
 }
 

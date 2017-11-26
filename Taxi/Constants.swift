@@ -8,4 +8,4 @@
 
 import Foundation
 
-let BASEURL = ""
+let BASEURL = "https://sandbox-api.uber.com/v1.2"
