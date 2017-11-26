@@ -21,6 +21,8 @@
 		EDA201E31FC723770019E78B /* TaxiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA201E21FC723770019E78B /* TaxiUITests.swift */; };
 		EDAB42C11FC96C5200A5A8DB /* UberC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB42BF1FC96C5200A5A8DB /* UberC.swift */; };
 		EDAB42C21FC96C5200A5A8DB /* UberC.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDAB42C01FC96C5200A5A8DB /* UberC.xib */; };
+		EDAB42C81FCA13FE00A5A8DB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB42C71FCA13FE00A5A8DB /* Constants.swift */; };
+		EDD629AF1FCA758000658111 /* Uber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD629AE1FCA758000658111 /* Uber.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		EDA201E41FC723770019E78B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDAB42BF1FC96C5200A5A8DB /* UberC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberC.swift; sourceTree = "<group>"; };
 		EDAB42C01FC96C5200A5A8DB /* UberC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UberC.xib; sourceTree = "<group>"; };
+		EDAB42C71FCA13FE00A5A8DB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EDD629AE1FCA758000658111 /* Uber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uber.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,16 +149,10 @@
 		EDA201C11FC723770019E78B /* Taxi */ = {
 			isa = PBXGroup;
 			children = (
-				EDA201CE1FC723770019E78B /* Info.plist */,
-				EDA201C21FC723770019E78B /* AppDelegate.swift */,
-				EDA201C41FC723770019E78B /* ViewController.swift */,
-				ED38B1701FC8182500718CE1 /* UberVC.swift */,
-				EDA201C91FC723770019E78B /* Assets.xcassets */,
-				EDA201CB1FC723770019E78B /* LaunchScreen.storyboard */,
-				EDA201C61FC723770019E78B /* Main.storyboard */,
-				ED38B1711FC8182500718CE1 /* UberVC.xib */,
-				EDAB42BF1FC96C5200A5A8DB /* UberC.swift */,
-				EDAB42C01FC96C5200A5A8DB /* UberC.xib */,
+				EDD629AD1FCA756D00658111 /* Model */,
+				EDAB42C61FCA13D700A5A8DB /* Supporting Files */,
+				EDAB42C51FCA13C100A5A8DB /* Controller */,
+				EDAB42C31FCA139100A5A8DB /* View */,
 			);
 			path = Taxi;
 			sourceTree = "<group>";
@@ -175,6 +173,54 @@
 				EDA201E41FC723770019E78B /* Info.plist */,
 			);
 			path = TaxiUITests;
+			sourceTree = "<group>";
+		};
+		EDAB42C31FCA139100A5A8DB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ED38B1711FC8182500718CE1 /* UberVC.xib */,
+				EDA201CB1FC723770019E78B /* LaunchScreen.storyboard */,
+				EDA201C61FC723770019E78B /* Main.storyboard */,
+				EDAB42C41FCA13A400A5A8DB /* UberCell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EDAB42C41FCA13A400A5A8DB /* UberCell */ = {
+			isa = PBXGroup;
+			children = (
+				EDAB42BF1FC96C5200A5A8DB /* UberC.swift */,
+				EDAB42C01FC96C5200A5A8DB /* UberC.xib */,
+			);
+			name = UberCell;
+			sourceTree = "<group>";
+		};
+		EDAB42C51FCA13C100A5A8DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EDA201C41FC723770019E78B /* ViewController.swift */,
+				ED38B1701FC8182500718CE1 /* UberVC.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		EDAB42C61FCA13D700A5A8DB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EDA201CE1FC723770019E78B /* Info.plist */,
+				EDA201C21FC723770019E78B /* AppDelegate.swift */,
+				EDA201C91FC723770019E78B /* Assets.xcassets */,
+				EDAB42C71FCA13FE00A5A8DB /* Constants.swift */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EDD629AD1FCA756D00658111 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EDD629AE1FCA758000658111 /* Uber.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,6 +522,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDAB42C81FCA13FE00A5A8DB /* Constants.swift in Sources */,
+				EDD629AF1FCA758000658111 /* Uber.swift in Sources */,
 				ED38B1721FC8182600718CE1 /* UberVC.swift in Sources */,
 				EDA201C51FC723770019E78B /* ViewController.swift in Sources */,
 				EDA201C31FC723770019E78B /* AppDelegate.swift in Sources */,
