@@ -12,3 +12,6 @@ It shows all the cab available near to your location along with there upfront pr
 - [ ] Add OLA UX
 - [ ] Compare them Based On price
 
+## Requirements
+- ios 11.0+
+- xcode 9.0+
