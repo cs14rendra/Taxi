@@ -22,7 +22,7 @@ It shows all the cab available near to your location along with there upfront pr
 - ios 11.0+
 - xcode 9.0+
 
-## Credits-
+## Credits
 - https://github.com/radex/SwiftyTimer
 - https://github.com/OAuthSwift/OAuthSwift
 
