@@ -10,7 +10,7 @@ It shows all the cab available near to your location along with there upfront pr
 - Run project in sandbox mode
 - To Book a live cab, replace BASEURL with live API URL.
 
-## Taks
+## Tasks
 
 - [x] Get Uber Data
 - [x] Add uber cancle
