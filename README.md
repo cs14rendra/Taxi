@@ -18,7 +18,7 @@ It shows all the cab available near to your location along with there upfront pr
 
 ## Credits-
 - https://github.com/radex/SwiftyTimer
-https://github.com/OAuthSwift/OAuthSwift
+- https://github.com/OAuthSwift/OAuthSwift
 
 ## License
 Taxi is available under the MIT license. See the LICENSE file for more info.
