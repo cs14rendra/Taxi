@@ -57,19 +57,25 @@ class UberVC: UIViewController {
     }
     
     @IBAction func cancel(_ sender: Any) {
+      
+        self.cancleCurrrentRide()
+    }
+    
+    @IBAction func getCurrentStatus(_ sender: Any) {
+        
         managerUber?.geCurrentStatus(completion: { (requestID, status, error) in
             guard error == nil else {
                 return
             }
-            if let id = requestID {
-                self.requestID = id
+            guard let id = requestID, id == nil , let sts = status , sts == nil else {
+                self.alert(title: "Error", message: "NO current Ride")
+                return
             }
-            
-            if let sts = status {
-                self.alert(title: "Current Ride", message: "\(sts)")
-            }
+            self.alert(title: "Current Ride", message: "\(sts)")
         })
+        
     }
+    
     
     @IBAction func status(_ sender: Any) {
         guard let rideID = self.requestID else {
@@ -78,6 +84,18 @@ class UberVC: UIViewController {
         }
         managerUber?.changeStatus(ofRiding: rideID, to: "accepted", completion: { (statusCode) in
             self.alert(title: "Status", message: "\(statusCode)")
+        })
+    }
+    
+    
+    
+    func cancleCurrrentRide(){
+        managerUber?.cancelRide(completion: { (ack) in
+            guard ack == nil else {
+                self.alert(title: "Error!", message: "Can't cancle request")
+                return
+            }
+            self.alert(title: "successfully", message: "cancled last Trip")
         })
     }
     

@@ -80,8 +80,7 @@ class Uber {
                     print(error.localizedDescription)
                     completion(nil,error, nil)
                 }
-                
-                return
+             return
             }
             
             do {
@@ -136,21 +135,22 @@ class Uber {
             }.resume()
     }
     
-    func cancelRide(rideID : String){
+    func cancelRide(completion:@escaping (_ ack:String?)->()){
         let session = self.getSession()
         var urlString = BASEURL
-        urlString += "/requests/\(rideID)"
+        urlString += "/requests/current"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!)
         request.httpMethod = "DELETE"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         session.dataTask(with: request as URLRequest) { (data, response, error) in
-            guard error == nil else {
-                print(error?.localizedDescription)
+            let res = response as! HTTPURLResponse
+            guard res.statusCode == 204 else {
+                completion("failed")
                 return
             }
-            let j = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
-            print(j)
+            print(res.statusCode)
+            completion(nil)
             }.resume()
     }
 
