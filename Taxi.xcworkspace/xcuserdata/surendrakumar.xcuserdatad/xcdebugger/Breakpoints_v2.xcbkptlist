@@ -105,13 +105,13 @@
                   symbolName = "UberRides.NativeAuthenticator.login() -&gt; ()"
                   moduleName = "UberRides"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/surendrakumar/Desktop/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
-                  timestampString = "533388417.323688"
+                  urlString = "file:///Users/surendrakumar/Dropbox/ios_project/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
+                  timestampString = "548234881.3403209"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "24">
+                  offsetFromSymbolStart = "12">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -120,13 +120,13 @@
                   symbolName = "closure #1 (Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; () in UberRides.NativeAuthenticator.login() -&gt; ()"
                   moduleName = "UberRides"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/surendrakumar/Desktop/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
-                  timestampString = "533388417.327493"
+                  urlString = "file:///Users/surendrakumar/Dropbox/ios_project/Taxi/Pods/UberRides/source/UberRides/OAuth/NativeAuthenticator.swift"
+                  timestampString = "548234881.344031"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "55"
                   endingLineNumber = "55"
-                  offsetFromSymbolStart = "24">
+                  offsetFromSymbolStart = "21">
                </Location>
             </Locations>
          </BreakpointContent>

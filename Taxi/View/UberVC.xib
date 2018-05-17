@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,10 +25,13 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iwg-bx-48j">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iwg-bx-48j">
                     <rect key="frame" x="0.0" y="607" width="190" height="60"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="190" id="Mfz-fS-V3J"/>
+                        <constraint firstAttribute="height" constant="60" id="itc-DO-jV7"/>
+                    </constraints>
                     <state key="normal" title="Cancle">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
@@ -36,10 +39,13 @@
                         <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Bhx-hM-hBh"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1Y-F6-v7S">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1Y-F6-v7S">
                     <rect key="frame" x="190" y="607" width="185" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="185" id="jxh-Hh-FQY"/>
+                        <constraint firstAttribute="height" constant="60" id="rhl-lp-sHY"/>
+                    </constraints>
                     <state key="normal" title="Change status">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
@@ -47,10 +53,12 @@
                         <action selector="status:" destination="-1" eventType="touchUpInside" id="lS6-uh-10k"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-1U-6Bd">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-1U-6Bd">
                     <rect key="frame" x="0.0" y="561" width="375" height="47"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="47" id="lYK-i2-9L2"/>
+                    </constraints>
                     <state key="normal" title="Get Currrent Status">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
@@ -60,6 +68,15 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Iwg-bx-48j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4fj-vB-YBe"/>
+                <constraint firstItem="J1Y-F6-v7S" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Ijf-Jd-D0I"/>
+                <constraint firstItem="QcC-1U-6Bd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dzd-CZ-gEu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="QcC-1U-6Bd" secondAttribute="bottom" constant="59" id="g7Z-TQ-XI3"/>
+                <constraint firstItem="J1Y-F6-v7S" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="gIi-Rk-cQP"/>
+                <constraint firstItem="QcC-1U-6Bd" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kRM-Ez-RNt"/>
+                <constraint firstItem="Iwg-bx-48j" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="mpD-Uy-Gae"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="35.5" y="54.5"/>
         </view>
