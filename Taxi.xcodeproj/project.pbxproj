@@ -10,6 +10,8 @@
 		3468F58031E37271ECCCD6D7 /* Pods_TaxiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E640308CAEA54DAE1DA42 /* Pods_TaxiUITests.framework */; };
 		5E83342003339B96E0A41150 /* Pods_Taxi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 858316E845E7480939BD0239 /* Pods_Taxi.framework */; };
 		6FE9D4527D1D4B0415DD94C5 /* Pods_TaxiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C81A34699710138B338B4FB /* Pods_TaxiTests.framework */; };
+		ED076E9520AD68CE0057F489 /* UbreIOSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED076E9420AD68CE0057F489 /* UbreIOSAPI.swift */; };
+		ED076E9720AD74D60057F489 /* Cab.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED076E9620AD74D60057F489 /* Cab.swift */; };
 		ED20BD461FCD273E00E8CA7C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = ED20BD451FCD273E00E8CA7C /* README.md */; };
 		ED38B1721FC8182600718CE1 /* UberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38B1701FC8182500718CE1 /* UberVC.swift */; };
 		ED38B1731FC8182600718CE1 /* UberVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED38B1711FC8182500718CE1 /* UberVC.xib */; };
@@ -54,6 +56,8 @@
 		AB443F734273B3418C48077E /* Pods-TaxiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TaxiTests/Pods-TaxiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BC7B8572E74D8323970F0D7C /* Pods-TaxiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxiUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TaxiUITests/Pods-TaxiUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8E2D82D7013365337DFEEDC /* Pods-TaxiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TaxiTests/Pods-TaxiTests.release.xcconfig"; sourceTree = "<group>"; };
+		ED076E9420AD68CE0057F489 /* UbreIOSAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UbreIOSAPI.swift; sourceTree = "<group>"; };
+		ED076E9620AD74D60057F489 /* Cab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cab.swift; sourceTree = "<group>"; };
 		ED20BD451FCD273E00E8CA7C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ED38B1701FC8182500718CE1 /* UberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberVC.swift; sourceTree = "<group>"; };
 		ED38B1711FC8182500718CE1 /* UberVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UberVC.xib; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 			children = (
 				ED38B1701FC8182500718CE1 /* UberVC.swift */,
 				EDA201C41FC723770019E78B /* ViewController.swift */,
+				ED076E9420AD68CE0057F489 /* UbreIOSAPI.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				EDD629AE1FCA758000658111 /* Uber.swift */,
+				ED076E9620AD74D60057F489 /* Cab.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -534,7 +540,9 @@
 				ED38B1721FC8182600718CE1 /* UberVC.swift in Sources */,
 				EDA201C51FC723770019E78B /* ViewController.swift in Sources */,
 				EDA201C31FC723770019E78B /* AppDelegate.swift in Sources */,
+				ED076E9720AD74D60057F489 /* Cab.swift in Sources */,
 				EDAB42C11FC96C5200A5A8DB /* UberC.swift in Sources */,
+				ED076E9520AD68CE0057F489 /* UbreIOSAPI.swift in Sources */,
 				ED7EB72D1FCA7C2C00F5D335 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
